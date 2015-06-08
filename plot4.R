@@ -32,28 +32,41 @@ subsetDat2 <- subset(subsetDat, Time >= strptime("01/02/2007 00:00:00", "%d/%m/%
 cleanDat <- subset(subsetDat2, Time <= strptime("02/02/2007 23:59:00", "%d/%m/%Y %H:%M:%S", 
                                                 tz="UTC"))
 
-# Create a histogram of Global Active Power 
-
+# Create four different plots in a panel.
+par(mfcol = c(2, 2), mar = c(5, 4, 2, 1))
+plot(cleanDat$Time, cleanDat$Global_active_power, type='l', xlab="",
+     ylab="Global Active Power")
 with(cleanDat, plot(Time, Sub_metering_1,
                     type = "n", xlab="",
                     ylab="Energy sub metering"))
 with(cleanDat, lines(Time, Sub_metering_1, col = "black"))
 with(cleanDat, lines(Time, Sub_metering_2, col = "red"))
 with(cleanDat, lines(Time, Sub_metering_3, col = "blue"))
-legend("topright", lty=1 , col = c("black", "red", "blue"), 
+legend(x="topright", lty=1 , col = c("black", "red", "blue"), 
        legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       cex=0.65)
+       cex=0.5, bty = "n")
+plot(cleanDat$Time, cleanDat$Voltage, type="l", xlab="datetime",
+     ylab="Voltage")
+plot(cleanDat$Time, cleanDat$Global_reactive_power, type="l", xlab="datetime",
+     ylab="Global_reactive_power")
 
-# Write the histogram to plot1.png. 
+# Write the four plots to plot4.png. 
 setwd('~/DataScienceSpecialization-Coursera/4-ExploratoryDataAnalysis/CourseProject1/')
 png(filename='plot4.png', width=480, height=480)
+par(mfcol = c(2, 2), mar = c(5, 4, 2, 1))
+plot(cleanDat$Time, cleanDat$Global_active_power, type='l', xlab="",
+     ylab="Global Active Power")
 with(cleanDat, plot(Time, Sub_metering_1,
                     type = "n", xlab="",
                     ylab="Energy sub metering"))
 with(cleanDat, lines(Time, Sub_metering_1, col = "black"))
 with(cleanDat, lines(Time, Sub_metering_2, col = "red"))
 with(cleanDat, lines(Time, Sub_metering_3, col = "blue"))
-legend("topright", lty=1 , col = c("black", "red", "blue"), 
+legend(x="topright", lty=1 , col = c("black", "red", "blue"), 
        legend = c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
-       cex=0.65)
+       cex=1, bty = "n")
+plot(cleanDat$Time, cleanDat$Voltage, type="l", xlab="datetime",
+     ylab="Voltage")
+plot(cleanDat$Time, cleanDat$Global_reactive_power, type="l", xlab="datetime",
+     ylab="Global_reactive_power")
 dev.off()
